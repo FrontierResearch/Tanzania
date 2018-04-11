@@ -1,13 +1,34 @@
 # ipak function: install and load multiple R packages.
-# check to see if packages are installed. Install them if they are not, then load them into the R session.
+# Check to see if packages are installed. Install them if they are not.
+# Optionally, load them into the R session.
 
-ipak <- function(pkg){
+ipak <- function(pkg, load = FALSE){
     new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
-    if (length(new.pkg)) 
+    if (length(new.pkg)) {
         install.packages(new.pkg, dependencies = TRUE)
-    sapply(pkg, require, character.only = TRUE)
+    }
+    update.packages(ask = FALSE)
+    if(load){
+        sapply(pkg, require, character.only = TRUE)
+    }
 }
 
 # usage
-packages <- c("ggplot2", "dplyr", "RColorBrewer", "marmap", "devtools", "tidyr", "shiny" )
-ipak(packages)
+packages <- c(
+    "ggplot2", "dplyr", "devtools", "RColorBrewer", 
+    "devtools", "tidyr", "shiny")
+
+ipak(packages, load = FALSE)
+
+
+
+
+
+
+
+
+
+
+
+
+
